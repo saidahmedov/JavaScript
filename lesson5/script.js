@@ -1,5 +1,4 @@
 'use striect';
-
 let money,
 	mission = 350000,
 	income = 'Freelance',
@@ -9,7 +8,7 @@ let money,
 		do {
 			money = prompt('Ваш ежемесячный доход?', 100000);
 		}
-		while(isNaN(money) || money === '' || money === null){};
+		while(isNaN(money) || money === '' || money === null);
 	}
 	start();
 let showTypeOf = function (item){
@@ -19,7 +18,8 @@ let showTypeOf = function (item){
 	showTypeOf(deposit);
 	showTypeOf(income);
 let costs,
-	costs2;
+	costs2,
+	howMuch;
 	let getExpensesMonth = function() {
 		let sum = 0;
 			for (let i = 0; i < 2; i++) {
@@ -29,12 +29,11 @@ let costs,
 				else if (i === 1) {
 					costs2 = prompt('Какие обязательные ежемесячные расходы у вас есть?', "Кварплата");
 				}
-				while (isNaN(getExpensesMonth) || getExpensesMonth === '' || getExpensesMonth === null){
-					sum += +prompt('Во сколько это обойдется?', 13500);
-				};
-
-			};
-				
+				while (isNaN(howMuch) || howMuch === '' || howMuch === null){
+					howMuch = prompt('Во сколько это обойдется?', 13500);
+				}
+				sum += +howMuch;
+			}
 		return sum;
 	};
 	let expensesAmount = getExpensesMonth();
@@ -45,8 +44,13 @@ let costs,
 		console.log('Ежемесячный доход со всеми расходами: ', getAccumulatedMonth());
 	let getTargetMonth = function(){
 		return mission / getAccumulatedMonth();
+		
 	};
-		console.log('За столько месяцев будет достигнута цель: ', Math.floor(getTargetMonth()));
+		if (getTargetMonth() < 0) {
+			console.log('Цель не будет достигнута');
+		}else {
+			console.log('Цель будет достигнута за:', Math.floor(getTargetMonth()), 'месяца');
+		};
 	let budgetDay = getAccumulatedMonth() / 30;
 		console.log('Ежедневный доход: ', Math.floor(budgetDay));
 let getStatusIncome = function (){
