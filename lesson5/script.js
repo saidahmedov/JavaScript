@@ -1,4 +1,4 @@
-'use striect';
+'use strict';
 let money,
 	mission = 350000,
 	income = 'Freelance',
@@ -29,6 +29,7 @@ let costs,
 				else if (i === 1) {
 					costs2 = prompt('Какие обязательные ежемесячные расходы у вас есть?', "Кварплата");
 				}
+					howMuch = prompt('Во сколько это обойдется?', 13500);
 				while (isNaN(howMuch) || howMuch === '' || howMuch === null){
 					howMuch = prompt('Во сколько это обойдется?', 13500);
 				}
