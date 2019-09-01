@@ -37,13 +37,11 @@ let appData = {
 				appData.expenses[costs] = howMuch;
 
 			};
-			console.log(appData.expenses);
 	},
 	getExpensesMonth: function() {
 		for (let key in appData.expenses){
 			appData.expensesMonth += +appData.expenses[key];
 		}
-		console.log('Все расходы за месяц: ',appData.expensesMonth);
 	},
 	getBudget: function (){
 		 appData.budgetMonth = appData.budget - appData.expensesMonth;
@@ -57,7 +55,7 @@ let appData = {
 		if (appData.period < 0) {
 			console.log('Цель не будет достигнута');
 		}else {
-			console.log('Цель будет достигнута за:', Math.floor(appData.period), 'месяца');
+			
 		}
 			appData.budgetDay = Math.floor(appData.budgetMonth / 30);
 		console.log('Ежедневный доход: ', Math.floor(appData.budgetDay));
@@ -70,14 +68,16 @@ let appData = {
 		}else {
 		 return('Что то пошло не так');
 		}
-	   }   
-};
+
+	   }
+}; 
  	appData.asking();
  	appData.getExpensesMonth();
  	appData.getBudget();
  	appData.getTargetMonth();
  	appData.getStatusIncome();
-
+	 	console.log('Цель будет достигнута за:', Math.floor(appData.period), 'месяца');
+	 	console.log('Все расходы за месяц: ',appData.expensesMonth);
  	 for (let i in appData){
 				console.log('программа включает данные: ' + i + ' - ' + appData[i]);
 		   };
