@@ -36,8 +36,8 @@ let appData = {
 			appData.income[itemIncome] = cashIncome;
 		}
 		console.log(appData.income);
-		let addExpenses = prompt('Перечислите возможные расходы через запятую.', 'Колледж,Кварплата');
-			appData.addExpenses = addExpenses.toUpperCase().split(',');
+		let addExpenses = prompt('Перечислите возможные расходы через запятую.', 'колледж, кварплата');
+			appData.addExpenses = addExpenses.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' ');
 			appData.deposit = confirm('Есть ли у вас депозит в банке?');
 		let costs,howMuch;
 			for (let i = 0; i < 2; i++){
