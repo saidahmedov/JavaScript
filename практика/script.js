@@ -30,20 +30,28 @@ let appData = {
 			}
 			while(!isNaN(itemIncome) || itemIncome === '' || itemIncome === null); 
 			do { 
-				cashIncome = +prompt('Сколько в месяц вы на этом зарабатываете?', 10000);
+				cashIncome = prompt('Сколько в месяц вы на этом зарабатываете?', 10000);
 			}
 			while(isNaN(cashIncome) || cashIncome === '' || cashIncome === null);
 			appData.income[itemIncome] = cashIncome;
 		}
-		let addExpenses = prompt('Перечислите возможные расходы через запятую.', 'Колледж, Кварплата');
-			appData.addExpenses = addExpenses.toLowerCase().split(',');
+		console.log(appData.income);
+		let addExpenses = prompt('Перечислите возможные расходы через запятую.', 'Колледж,Кварплата');
+			appData.addExpenses = addExpenses.toUpperCase().split(',');
 			appData.deposit = confirm('Есть ли у вас депозит в банке?');
 		let costs,howMuch;
 			for (let i = 0; i < 2; i++){
 				if (i === 0) {
-					costs = prompt('Какие обязательные ежемесячные расходы у вас есть?', "Колледж");
+					do {
+						costs = prompt('Какие обязательные ежемесячные расходы у вас есть?', "Колледж");
+					}
+					while(!isNaN(costs) || costs === '' || costs === null);
+					
 				}else if (i === 1) {
-					costs = prompt('Какие обязательные ежемесячные расходы у вас есть?', "Кварплата");
+					do{
+						costs = prompt('Какие обязательные ежемесячные расходы у вас есть?', "Кварплата");
+					}
+					while(!isNaN(costs) || costs === '' || costs === null);
 				}
 					howMuch = prompt('Во сколько это обойдется?', 13500);
 				while (isNaN(howMuch) || howMuch === '' || howMuch === null){
@@ -90,13 +98,13 @@ let appData = {
 		let percentDeposit, moneyDeposit;
 		if (appData.deposit) {
 			do {
-				percentDeposit = prompt('Какой годовой процент?', '10');
+				appData.percentDeposit = prompt('Какой годовой процент?', '10');
 			}
-			while(!isNaN(percentDeposit) || percentDeposit === '' || percentDeposit === null); 
+			while(isNaN(appData.percentDeposit) || appData.percentDeposit.lenght === '' || appData.percentDeposit === null); 
 			do { 
-				moneyDeposit = +prompt('Какая сумма заложена?', 10000);
+				appData.moneyDeposit = prompt('Какая сумма заложена?', 10000);
 			}
-			while(isNaN(moneyDeposit) || moneyDeposit === '' || moneyDeposit === null);	
+			while(isNaN(appData.moneyDeposit) || appData.moneyDeposit === '' || appData.moneyDeposit === null);	
 		}
 
 	},
@@ -112,6 +120,7 @@ let appData = {
  	appData.getInfoDeposit();
 
  	console.log(appData.percentDeposit, appData.moneyDeposit, appData.calcSavedMoney());
+ 	console.log(appData.addExpenses);
 
  	 // for (let i in appData){
 			// 	console.log('программа включает данные: ' + i + ' - ' + appData[i]);
