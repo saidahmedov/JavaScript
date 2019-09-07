@@ -126,6 +126,7 @@ let appData = {
 		input.forEach(input =>{
 			if (input.disabled === false) {
 				input.disabled = true;
+				periodSelect.disabled = false;
 				start.style.display = 'none';
 				cancel.style.display = 'block';
 			}else {
@@ -149,6 +150,11 @@ let appData = {
 	start.addEventListener('click', appData.inputDisable);
 	expensesPlus.addEventListener('click', appData.addExpensesBlock);
 	incomePlus.addEventListener('click', appData.addIncomeBlock);
+
+	periodSelect.addEventListener('change', ()=>{
+		periodAmount.innerHTML = periodSelect.value;
+		incomePeriodValue.value = periodSelect.value * appData.budgetMonth;
+	});
 	
 	
 
