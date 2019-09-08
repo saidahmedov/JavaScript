@@ -42,16 +42,16 @@ let appData = {
 	budgetMonth: 0,
 	expensesMonth: 0,
 	start: function() {
-			
-			appData.budget = +salaryAmount.value;
-			appData.getExpenses();
-			appData.getIncome();
-			appData.getExpensesMonth();
-			appData.getIncomeMonth();
-			appData.getAddExpenses();
-			appData.getAddIncome();	
-			appData.getBudget();
-		 	appData.showResult();	
+			this.budget = +salaryAmount.value;
+			this.getExpenses();
+			this.getIncome();
+			this.getExpensesMonth();
+			this.getIncomeMonth();
+			this.getAddExpenses();
+			this.getAddIncome();	
+			this.getBudget();
+			this.inputDisable();
+		 	this.showResult();	
 	},
 	showResult: function () {
 		budgetMonthValue.value = this.budgetMonth;
@@ -73,15 +73,13 @@ let appData = {
 		},
 	getExpenses: function () {
 		expensesItems.forEach(function(item) {
-			let itemExpenses = item.querySelector('.expenses-title').value;
-			let cashExpenses = item.querySelector('.expenses-amount').value;
-			if (itemExpenses !== '' && cashExpenses !== '') {
-				appData.expenses[itemExpenses] = cashExpenses;
-			}
-
-		});
+				let itemExpenses = item.querySelector('.expenses-title').value;
+				let cashExpenses = item.querySelector('.expenses-amount').value;
+				if (itemExpenses !== '' && cashExpenses !== '') {
+					appData.expenses[itemExpenses] = cashExpenses;
+				}
+			});
 	},
-
 	addExpensesBlock: function () {
 		let cloneExpensesItem = expensesItems[0].cloneNode(true);
 		expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
@@ -109,19 +107,21 @@ let appData = {
 		}
 	},
 	getAddExpenses: function () {
+		let expensesAdd = this;
 		let adExpenses = additionalExpensesItem.value.split(',');
 		adExpenses.forEach(function (item) {
 			item = item.trim();
 			if (item !== '') {
-				appData.addExpenses.push(item);
+				expensesAdd.addExpenses.push(item);
 			}
 		});
 	},
 	getAddIncome: function () {
+		let incomeAdd = this;
 		additionalIncomeItem.forEach(function (item) {
 			let itemValue = item.value.trim();
 			if (itemValue !== '') {
-				appData.addIncome.push(itemValue);
+				incomeAdd.addIncome.push(itemValue);
 			}
 		});
 	},
@@ -135,6 +135,10 @@ let appData = {
 			}
 		});
 	},
+	changePeriodOur: function () {
+		periodAmount.innerHTML = periodSelect.value;
+		incomePeriodValue.value = periodSelect.value * this.budgetMonth;
+	},
 	clearForm: function () {
 		cancel.style.display = 'none';
 		start.style.display = 'block';
@@ -143,6 +147,23 @@ let appData = {
 			item.value = '';
 			start.disabled = true;
 		});
+			expensesPlus.style.display = 'block';
+			incomePlus.style.display = 'block';
+			expensesTitle = document.querySelectorAll('.expenses-title');
+			appData = {
+			income: {},
+			budget: 0,
+			addIncome: [],
+			incomeMonth: 0,
+			expenses: {},
+			addExpenses: [],
+			deposit: false,
+			percentDeposit: 0,
+			moneyDeposit: 0,
+			budgetDay: 0,
+			budgetMonth: 0,
+			expensesMonth: 0
+			}
 	},
 	getBudget: function (){
 		 this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
@@ -153,18 +174,13 @@ let appData = {
 	},
 	calcSavedMoney: function () {
 			return this.budgetMonth * periodSelect.value;
-		},
+		}
 	};
 	start.addEventListener('click', appData.start.bind(appData));
-	start.addEventListener('click', appData.inputDisable);
-	expensesPlus.addEventListener('click', appData.addExpensesBlock);
-	incomePlus.addEventListener('click', appData.addIncomeBlock);
-	cancel.addEventListener('click', appData.clearForm);
-
-	periodSelect.addEventListener('change', ()=>{
-		periodAmount.innerHTML = periodSelect.value;
-		incomePeriodValue.value = periodSelect.value * this.budgetMonth;
-	});
+	expensesPlus.addEventListener('click', appData.addExpensesBlock.bind(appData));
+	incomePlus.addEventListener('click', appData.addIncomeBlock.bind(appData));
+	cancel.addEventListener('click', appData.clearForm.bind(appData));
+	periodSelect.addEventListener('change', appData.changePeriodOur.bind(appData));
 	start.disabled = true;
 	salaryAmount.addEventListener('input', ()=>{
 		if (salaryAmount.value !== ''  && !isNaN(salaryAmount.value)) {
