@@ -17,6 +17,7 @@ let start = document.getElementById('start'),
 	targetMonthValue = document.getElementsByClassName('target_month-value')[0],
 	salaryAmount = document.querySelector('.salary-amount'),
 	incomeTitle = document.querySelector('.income-title'),
+	incomeAmount = document.querySelector('.income-amount'),
  	expensesTitle = document.querySelector('.expenses-title'),
 	expensesItems = document.querySelectorAll('.expenses-items'),
 	incomeItems = document.querySelectorAll('.income-items'),
@@ -41,14 +42,12 @@ let appData = {
 	budgetMonth: 0,
 	expensesMonth: 0,
 	start: function() {
-			if (salaryAmount.value === '') {
-				start.disabled = 'true';
-				return;
-			};
+			
 			appData.budget = +salaryAmount.value;
 			appData.getExpenses();
 			appData.getIncome();
 			appData.getExpensesMonth();
+			appData.getIncomeMonth();
 			appData.getAddExpenses();
 			appData.getAddIncome();	
 			appData.getBudget();
@@ -99,10 +98,14 @@ let appData = {
 			incomePlus.style.display = 'none';
 		}
 	},
-
 	getExpensesMonth: function() {
 		for (let key in appData.expenses){
 			appData.expensesMonth += +appData.expenses[key];
+		}
+	},
+	getIncomeMonth: function() {
+		for (let key in appData.income){
+			appData.incomeMonth += +appData.income[key];
 		}
 	},
 	getAddExpenses: function () {
@@ -155,9 +158,12 @@ let appData = {
 		periodAmount.innerHTML = periodSelect.value;
 		incomePeriodValue.value = periodSelect.value * appData.budgetMonth;
 	});
-	
-	
-
+	start.disabled = true;
+	salaryAmount.addEventListener('input', ()=>{
+		if (salaryAmount.value !== ''  && !isNaN(salaryAmount.value)) {
+				start.disabled = false;
+			}
+	});
 
   
 
